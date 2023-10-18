@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wheel of Fortune</title>
+    <style>
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: 5px solid black;
+            border-radius: 50%;
+        }
+
+        .wheel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                red 0deg 60deg,
+                yellow 60deg 120deg,
+                green 120deg 180deg,
+                blue 180deg 240deg,
+                orange 240deg 300deg,
+                purple 300deg 360deg
+            );
+        }
+
+        .spin-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wheel-container">
+        <div class="wheel"></div>
+    </div>
+    <button class="spin-button" onclick="spinWheel()">Spin the Wheel</button>
+
+    <script>
+        let spinning = false;
+
+        function spinWheel() {
+            if (spinning) return;
+
+            const wheel = document.querySelector('.wheel');
+            const initialRotation = 3600; // Constant initial rotation in degrees
+            const randomRotation = Math.floor(Math.random() * 360); // Randomize the outcome
+            const turnFloat = (initialRotation + randomRotation) / 360;
+
+            wheel.style.transition = 'transform 5s';
+            wheel.style.transform = `rotate(${turnFloat}turn)`;
+            
+            spinning = true;
+            
+            // After the animation, you can add logic to determine the prize based on the final angle of the wheel.
+            setTimeout(() => {
+                alert("You won a prize! " + `${turnFloat}`);
+                spinning = false;
+                wheel.style.transition = `initial`;
+                wheel.style.transform = `rotate(0turn)`;
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
